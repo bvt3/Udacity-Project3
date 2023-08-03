@@ -94,7 +94,7 @@ stages:
 #--------------------------------------------#  
 # BUILD STAGE
 #--------------------------------------------#    
-- stage: Build
+- stage: Destroy
   jobs:
   - job: DestroyInfrastructure
     steps:
