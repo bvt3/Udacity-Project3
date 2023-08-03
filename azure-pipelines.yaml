@@ -119,8 +119,7 @@ stages:
   # Deploy FakeRestAPI Web App
   # ToDo: Provide <environment name> you created in your DevOps project
   - deployment: FakeRestAPI
-    pool:
-      vmImage: 'Ubuntu-18.04'
+    pool: Prj3AgentPool
     environment: '$(environmentName)'
     strategy:
       runOnce:
@@ -133,6 +132,7 @@ stages:
               appName: $(webAppName)
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip      # ToDo: Use the published zip artifact. 
+              deploymentMethod: zipDeploy
 
 #--------------------------------------------#  
 # DESTROY STAGE
