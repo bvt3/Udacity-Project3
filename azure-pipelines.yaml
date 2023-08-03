@@ -103,6 +103,20 @@ stages:
       displayName: 'Terrafom installation'
       inputs:
         terraformVersion: '1.2.9'
+
+    # Run Terraform Init on the pipeline agent
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+      displayName: 'Terrafom init'
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+        backendServiceArm: '$(azureServiceConnectionId)'
+        backendAzureRmResourceGroupName: 'devops'
+        backendAzureRmStorageAccountName: 'udacity80st'
+        backendAzureRmContainerName: 'mycontainer'
+        backendAzureRmKey: 'test.terraform.tfstate'
+
     # Destroy the resources in Azure by running a separate pipeline. 
     - task: TerraformTaskV3@3
       displayName: Terraform destroy
