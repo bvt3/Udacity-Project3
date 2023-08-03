@@ -7,10 +7,10 @@ provider "azurerm" {
 }
 terraform {
   backend "azurerm" {
-    storage_account_name = ""
-    container_name       = ""
-    key                  = ""
-    access_key           = ""
+    storage_account_name = "udacity80st"
+    container_name       = "mycontainer"
+    key                  = "mykey"
+    access_key           = "FVflOZQ0TUM3SQSIp0Ri5rxNJSxYoeYUnhbh4YvLfgfkvdeQ0H4AJaugGHg/E02oevrYLiyPzFzR+AStAfaOhQ=="
   }
 }
 module "resource_group" {
@@ -51,4 +51,17 @@ module "publicip" {
   application_type = "${var.application_type}"
   resource_type    = "publicip"
   resource_group   = "${module.resource_group.resource_group_name}"
+}
+module "vm" {
+  source           = "../../modules/vm"
+  location         = "${var.location}"  
+  resource_group   = "${module.resource_group.resource_group_name}"  
+  image_name       = "${var.image_name}"
+  image_rg_name    = "${var.image_rg_name}"
+  subnet_id        = "${module.network.subnet_id_test}"
+  public_ip_address_id = "${module.publicip.public_ip_address_id}"
+  vm_name          = "${var.vm_name}"
+  computer_name    = "${var.computer_name}"
+  admin_user       = "${var.admin_user}"
+  admin_password   = "${var.admin_password}"
 }

@@ -14,3 +14,12 @@ variable virtual_network_name {}
 variable address_prefix_test {}
 variable address_space {}
 
+# Image
+variable image_name {}
+variable image_rg_name {}
+
+# VM
+variable vm_name {}
+variable computer_name {}
+variable admin_user {}
+variable admin_password {}
