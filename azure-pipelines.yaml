@@ -18,6 +18,9 @@ variables:
   projectRoot: $(System.DefaultWorkingDirectory)
   # Environment name
   environmentName: 'benprj3'
+  backendARMResourceGroupName: 'devops'
+  backendARMStorageAccountName: 'udacity80st'
+  backendARMContainerName: 'mycontainer'
 
 stages:
 #--------------------------------------------#  
@@ -44,9 +47,9 @@ stages:
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         backendServiceArm: '$(azureServiceConnectionId)'
-        backendAzureRmResourceGroupName: 'devops'
-        backendAzureRmStorageAccountName: 'udacity80st'
-        backendAzureRmContainerName: 'mycontainer'
+        backendAzureRmResourceGroupName: '$(backendARMResourceGroupName)'
+        backendAzureRmStorageAccountName: '$(backendARMStorageAccountName)'
+        backendAzureRmContainerName: '$(backendARMContainerName)'
         backendAzureRmKey: 'test.terraform.tfstate'
 
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
@@ -112,9 +115,9 @@ stages:
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         backendServiceArm: '$(azureServiceConnectionId)'
-        backendAzureRmResourceGroupName: 'devops'
-        backendAzureRmStorageAccountName: 'udacity80st'
-        backendAzureRmContainerName: 'mycontainer'
+        backendAzureRmResourceGroupName: '$(backendARMResourceGroupName)'
+        backendAzureRmStorageAccountName: '$(backendARMStorageAccountName)'
+        backendAzureRmContainerName: '$(backendARMContainerName)'
         backendAzureRmKey: 'test.terraform.tfstate'
 
     # Destroy the resources in Azure by running a separate pipeline. 
