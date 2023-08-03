@@ -16,10 +16,8 @@ resource "azurerm_linux_web_app" "test" {
   app_settings = {
     "WEBSITE_RUN_FROM_PACKAGE" = 1
   }
-  
+
   site_config {
-    always_on = false
-    dotnet_framework_version = "v6.0"
-    scm_do_build_during_deployment = true
+    always_on = false    
   }
 }
