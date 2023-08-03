@@ -98,6 +98,12 @@ stages:
   jobs:
   - job: DestroyInfrastructure
     steps:
+    # Install Terraform on the pipeline agent 
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+      displayName: 'Terrafom installation'
+      inputs:
+        terraformVersion: '1.2.9'
+    # Destroy the resources in Azure by running a separate pipeline. 
     - task: TerraformTaskV3@3
       displayName: Terraform destroy
       inputs:
