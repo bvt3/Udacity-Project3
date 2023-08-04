@@ -186,7 +186,7 @@ stages:
   - deployment: VMDeploy
     displayName: Selenium Tests
     environment:
-      name: '$(environmentName)'
+      name: tf-vm
       resourceType: virtualMachine
       tags: selenium
     strategy:
