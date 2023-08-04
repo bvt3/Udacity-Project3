@@ -15,7 +15,7 @@ chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-dev-shm-usage')
 #options.add_argument('--disable-extensions')
 #driver = webdriver.Chrome(options=options)
-driver = webdriver.Chrome('/home/devopsagent/app/chromedriver',chrome_options=chrome_options)
+driver = webdriver.Chrome('/home/devopsagent/app/chromedriver',options=chrome_options)
 driver.get('https://www.saucedemo.com/')
 
 driver.find_element(By.ID, 'user-name').send_keys(username)
