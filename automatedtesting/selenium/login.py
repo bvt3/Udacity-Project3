@@ -6,7 +6,7 @@ from selenium.webdriver.chrome.service import Service
 
 # Start the browser and login with standard_user
 def login (user, password):
-    service = Service(executable_path=r'/home/devopsagent/.cache/selenium/chrome/linux64/115.0.5790.170/chrome')
+    service = Service(executable_path=r'/home/devopsagent/app/chromedriver')
     print ('Starting the browser...')
     # --uncomment when running in Azure DevOps.
     options = ChromeOptions()
