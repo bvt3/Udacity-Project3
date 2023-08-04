@@ -1,6 +1,6 @@
 # #!/usr/bin/env python
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options as ChromeOptions
+#from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.service import Service
 
 
@@ -9,7 +9,7 @@ def login (user, password):
     service = Service(executable_path="/home/devopsagent/app")
     print ('Starting the browser...')
     # --uncomment when running in Azure DevOps.
-    options = ChromeOptions()
+    options = webdriver.ChromeOptions()
     options.add_argument("--headless") 
     # driver = webdriver.Chrome(options=options)
     #driver = webdriver.Chrome()
