@@ -34,6 +34,8 @@ from time import sleep
 # Set options for not prompting DevTools information
 options = Options()
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
+options.add_argument("--headless") 
+options.set_capability('extendedDebugging', True)
 
 print("testing started")
 driver = webdriver.Chrome(options=options)
