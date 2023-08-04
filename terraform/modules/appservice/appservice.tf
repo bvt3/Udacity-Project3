@@ -4,7 +4,7 @@ resource "azurerm_app_service_plan" "test" {
   location            = "${var.location}"
   resource_group_name = "${var.resource_group}"
   # os_type             = "Linux"
-  # #os_type             = "Windows"
+  os_type             = "Windows"
   # sku_name            = "B1"
   sku {
     tier = "Free"
@@ -21,7 +21,7 @@ resource "azurerm_app_service" "test" {
   app_service_plan_id = azurerm_app_service_plan.test.id
 
   app_settings = {
-    "WEBSITE_RUN_FROM_PACKAGE" = 0
+    "WEBSITE_RUN_FROM_PACKAGE" = 1
   }
 
   # site_config {
