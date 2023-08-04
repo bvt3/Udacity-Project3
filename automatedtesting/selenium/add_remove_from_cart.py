@@ -1,5 +1,4 @@
 from selenium import webdriver
-#from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options as ChromeOptions
@@ -8,15 +7,15 @@ username = 'standard_user'
 pwd = 'secret_sauce'
 
 print ('Starting the browser...')
-options = ChromeOptions()
-options.add_argument('--ignore-certificate-errors')
-options.add_argument('--allow-running-insecure-content')
-options.add_argument('--no-sandbox')
-options.add_argument('--headless')
-options.add_argument('--disable-dev-shm-usage')
-options.add_argument('--disable-extensions')
-#driver = webdriver.Chrome(ChromeDriverManager().install())
-driver = webdriver.Chrome(options=options)
+chrome_options = ChromeOptions()
+#options.add_argument('--ignore-certificate-errors')
+#options.add_argument('--allow-running-insecure-content')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--disable-dev-shm-usage')
+#options.add_argument('--disable-extensions')
+#driver = webdriver.Chrome(options=options)
+driver = webdriver.Chrome('/home/devopsagent/app/chromedriver',chrome_options=chrome_options)
 driver.get('https://www.saucedemo.com/')
 
 driver.find_element(By.ID, 'user-name').send_keys(username)
