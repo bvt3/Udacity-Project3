@@ -13,7 +13,7 @@ service = Service(executable_path=r'/home/devopsagent/.cache/selenium/chrome/lin
 options = ChromeOptions()
 #options.add_argument('--ignore-certificate-errors')
 #options.add_argument('--allow-running-insecure-content')
-options.add_argument('--headless=new')
+options.add_argument("--headless")
 #options.add_argument('--no-sandbox')
 #options.add_argument('--disable-dev-shm-usage')
 #options.add_argument('--disable-extensions')
