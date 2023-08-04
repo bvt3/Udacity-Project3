@@ -13,7 +13,7 @@ def login (user, password):
     options.add_argument("--headless") 
     # driver = webdriver.Chrome(options=options)
     #driver = webdriver.Chrome()
-    driver = webdriver.Chrome(options=options, service=service)
+    driver = webdriver.Chrome(service=service, options=options)
     print ('Browser started successfully. Navigating to the demo page to login.')
     driver.get('https://www.saucedemo.com/')
     service.stop()
