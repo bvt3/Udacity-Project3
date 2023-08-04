@@ -8,7 +8,8 @@ username = 'standard_user'
 pwd = 'secret_sauce'
 
 print ('Starting the browser...')
-service = Service(executable_path=r'/home/devopsagent/app/chromedriver')
+#service = Service(executable_path=r'/home/devopsagent/app/chromedriver')
+service = Service(executable_path=r'/home/devopsagent/.cache/selenium/chrome/linux64/115.0.5790.170/chrome')
 options = ChromeOptions()
 #options.add_argument('--ignore-certificate-errors')
 #options.add_argument('--allow-running-insecure-content')
@@ -16,8 +17,8 @@ options.add_argument('--headless=new')
 #options.add_argument('--no-sandbox')
 #options.add_argument('--disable-dev-shm-usage')
 #options.add_argument('--disable-extensions')
-driver = webdriver.Chrome(options=options)
-#driver = webdriver.Chrome(options=options, service=service)
+#driver = webdriver.Chrome(options=options)
+driver = webdriver.Chrome(options=options, service=service)
 #driver = webdriver.Chrome(service=service)
 driver.get('https://www.saucedemo.com/')
 
