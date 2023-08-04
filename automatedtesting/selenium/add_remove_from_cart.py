@@ -1,4 +1,5 @@
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options as ChromeOptions
@@ -8,7 +9,8 @@ pwd = 'secret_sauce'
 
 print ('Starting the browser...')
 options = ChromeOptions()
-options.add_argument("--headless") 
+options.add_argument("--headless")
+driver = webdriver.Chrome(ChromeDriverManager().install())
 driver = webdriver.Chrome(options=options)
 driver.get('https://www.saucedemo.com/')
 
