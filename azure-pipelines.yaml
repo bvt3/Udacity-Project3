@@ -209,21 +209,21 @@ stages:
                 sudo apt-get install -y chromium-browser
                 pip3 install selenium
                 cd ~/
-                DIR=/home/adminuser/app
+                DIR=/home/devopsagent/app
                 if [ ! -d "$DIR" ]; then
                     mkdir app
                 fi
-                mv /home/adminuser/azagent/_work/1/drop-seleniumtest/$(Build.BuildId)-uitests.zip app
+                mv /home/devopsagent/mynewagent/_prj3work/1/drop-seleniumtest/$(Build.BuildId)-uitests.zip app
                 cd app
                 unzip -o $(Build.BuildId)-uitests.zip
-                FILE=/home/adminuser/app/chromedriver_linux64.zip
+                FILE=/home/devopsagent/app/chromedriver_linux64.zip
                 if [ ! -f "$FILE" ]; then
                     LATEST=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE)
                     wget http://chromedriver.storage.googleapis.com/$LATEST/chromedriver_linux64.zip
                     unzip -o chromedriver_linux64.zip
                     sudo ln -s $PWD/chromedriver /usr/local/bin/chromedriver
                 fi
-                export PATH=$PATH:/home/adminuser/app
+                export PATH=$PATH:/home/devopsagent/app
                 echo "Starting Selenium Tests"
                 python3 add_remove_from_cart.py >> selenium.log
                 echo "Completed Selenium Tests. Check selenium.log for results."
