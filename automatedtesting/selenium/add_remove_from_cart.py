@@ -2,24 +2,18 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.chrome.service import Service
+import datetime
 
 username = 'standard_user'
 pwd = 'secret_sauce'
 
+dt = datetime.datetime.now()
+print("Start test: ", dt)
+
 print ('Starting the browser...')
-#service = Service(executable_path=r'/home/devopsagent/app/chromedriver')
-service = Service(executable_path=r'/home/devopsagent/.cache/selenium/chrome/linux64/115.0.5790.170/chrome')
-options = ChromeOptions()
-#options.add_argument('--ignore-certificate-errors')
-#options.add_argument('--allow-running-insecure-content')
-options.add_argument("--headless")
-#options.add_argument('--no-sandbox')
-#options.add_argument('--disable-dev-shm-usage')
-#options.add_argument('--disable-extensions')
-#driver = webdriver.Chrome(options=options)
-driver = webdriver.Chrome(options=options, service=service)
-#driver = webdriver.Chrome(service=service)
+o = ChromeOptions()
+o.add_argument("--headless")
+driver = webdriver.Chrome(options=o)
 driver.get('https://www.saucedemo.com/')
 
 driver.find_element(By.ID, 'user-name').send_keys(username)
@@ -66,3 +60,6 @@ else:
     print("Test failed!")
 
 driver.quit()
+
+dt = datetime.datetime.now()
+print("End test: ", dt)

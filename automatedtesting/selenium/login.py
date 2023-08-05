@@ -29,7 +29,10 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 from time import sleep
+import datetime
 
+dt = datetime.datetime.now()
+print("Start test: ", dt)
 
 # Set options for not prompting DevTools information
 o = Options()
@@ -51,3 +54,6 @@ print("TEST 0: `title` test passed")
 
 # Close the driver
 driver.quit()
+
+dt = datetime.datetime.now()
+print("End test: ", dt)
