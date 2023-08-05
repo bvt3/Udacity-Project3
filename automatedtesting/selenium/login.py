@@ -35,7 +35,7 @@ from time import sleep
 o = Options()
 #o.add_experimental_option("excludeSwitches", ["enable-logging"])
 o.add_argument("--headless") 
-o.set_capability("browserName", "chrome")
+#o.set_capability("browserName", "chrome")
 
 print("testing started")
 driver = webdriver.Chrome(options=o)
