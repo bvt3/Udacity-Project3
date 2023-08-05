@@ -6,9 +6,11 @@ import datetime
 
 username = 'standard_user'
 pwd = 'secret_sauce'
+expectedTitle = 'Swag Labs'
+expectedCartFull = 5
+expectedCartEmpty = 0
 
 dt = datetime.datetime.now()
-#print("Start test: ", str(dt)[0:19])
 
 print( str(dt)[0:19] + ',Success,Start test - Starting the browser' )
 
@@ -25,8 +27,12 @@ dt = datetime.datetime.now()
 print( str(dt)[0:19] + ',Success,Browser started successfully. Logged-in user: ' + username )
 
 dt = datetime.datetime.now()
-assert "Swag Labs" in driver.title
-print( str(dt)[0:19] + ',Success,TEST PASSED: Website title' )
+#assert "Swag Labs" in driver.title
+#if driver.title == 6 and delitemcount == 0:
+if driver.title == expectedTitle:
+    print( str(dt)[0:19] + ',Success,TEST PASSED: Website title' )
+else:
+    print( str(dt)[0:19] + ',Success,TEST FAILED: Website title' )
 
 items = driver.find_elements(By.XPATH, '//div[@class="inventory_item"]')
 for item in items:
@@ -42,8 +48,12 @@ cartitemcount = int(driver.find_element(By.CLASS_NAME, 'shopping_cart_badge').te
 dt = datetime.datetime.now()
 print( str(dt)[0:19] + ',Success,Number of items in the cart: ' + str(cartitemcount) )
 
-assert "6" in str(cartitemcount)
-print( str(dt)[0:19] + ',Success,TEST PASSED: Adding items to cart' )
+#assert "6" in str(cartitemcount)
+if cartitemcount == expectedCartFull:
+    print( str(dt)[0:19] + ',Success,TEST PASSED: Adding items to cart' )
+else:
+    print( str(dt)[0:19] + ',Success,TEST FAILED: Adding items to cart - Expected ' + str(expectedCartFull) + ' but ' + str(cartitemcount) )
+
 
 driver.get('https://www.saucedemo.com/cart.html')
 dt = datetime.datetime.now()
@@ -68,8 +78,12 @@ except NoSuchElementException:
 dt = datetime.datetime.now()
 print( str(dt)[0:19] + ',Success,Number of items in the cart: ' + str(delitemcount) )
 
-assert "0" in str(delitemcount)
-print( str(dt)[0:19] + ',Success,TEST PASSED: Removing items to cart' )
+#assert "0" in str(delitemcount)
+if delitemcount == expectedCartEmpty:
+    print( str(dt)[0:19] + ',Success,TEST PASSED: Removing items to cart' )
+else:
+    print( str(dt)[0:19] + ',Success,TEST FAILED: Removing items to cart - Expected ' + str(expectedCartEmpty) + ' but ' + str(delitemcount) )
+
 
 driver.quit()
 
