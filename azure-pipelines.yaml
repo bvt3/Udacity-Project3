@@ -130,3 +130,4 @@ stages:
                 if [ -d "$DIR" ]; then
                     rm -r app/
                 fi
+                sudo rm -rf '/usr/local/bin/chromedriver'
