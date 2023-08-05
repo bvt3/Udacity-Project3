@@ -22,6 +22,9 @@ driver.find_element(By.CLASS_NAME, 'submit-button').click()
 
 print ('Browser started successfully. Logged-in user: ' + username + '.')
 
+assert "Swag Labs" in driver.title
+print('TEST PASSED: Website title')
+
 items = driver.find_elements(By.XPATH, '//div[@class="inventory_item"]')
 for item in items:
     itemdesc = item.find_element(By.XPATH, './/div[@class="inventory_item_description"]')
@@ -33,9 +36,9 @@ for item in items:
 
 cartitemcount = int(driver.find_element(By.CLASS_NAME, 'shopping_cart_badge').text)
 print('Number of items in the cart: ' + str(cartitemcount))
-print('Start assert')
+
 assert "6" in str(cartitemcount)
-print('End assert')
+print('TEST PASSED: Adding items to cart')
 
 driver.get('https://www.saucedemo.com/cart.html')
 print('Navigated to the cart page')
@@ -57,12 +60,8 @@ except NoSuchElementException:
 
 print('Number of items in the cart: ' + str(delitemcount))
 
-if cartitemcount == 6 and delitemcount == 0:
-    print("Test passed!")
-else:
-    print("Test failed!")
-
-print("Title: " + driver.title)
+assert "0" in str(cartitemcount)
+print('TEST PASSED: Removing items to cart')
 
 driver.quit()
 
