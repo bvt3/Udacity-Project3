@@ -73,10 +73,11 @@ stages:
         deploy:
           steps:
           - download: current
+            displayName: 'Download Selenium artifact'
             artifact: drop-seleniumtest
             
           - task: Bash@3
-            displayName: 'Execute Selenium Tests'
+            displayName: 'Execute Selenium tests'
             inputs:
               targetType: 'inline'
               script: |           
@@ -103,6 +104,8 @@ stages:
                 fi
                 export PATH=$PATH:/home/devopsagent/app
                 echo "Starting Selenium Tests"
+                python3 add_remove_from_cart.py
+                echo "Running the test and saving it to a log file."
                 python3 add_remove_from_cart.py >> selenium.log
                 echo "Completed Selenium Tests. Check selenium.log for results."
 
