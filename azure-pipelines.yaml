@@ -76,6 +76,7 @@ stages:
             artifact: drop-seleniumtest
             
           - task: Bash@3
+            displayName: 'Execute Selenium Tests'
             inputs:
               targetType: 'inline'
               script: |           
