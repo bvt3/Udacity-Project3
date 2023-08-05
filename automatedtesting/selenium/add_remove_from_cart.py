@@ -59,6 +59,8 @@ if cartitemcount == 6 and delitemcount == 0:
 else:
     print("Test failed!")
 
+print("Title: " + driver.title)
+
 driver.quit()
 
 dt = datetime.datetime.now()
