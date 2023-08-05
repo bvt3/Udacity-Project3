@@ -8,7 +8,7 @@ username = 'standard_user'
 pwd = 'secret_sauce'
 
 dt = datetime.datetime.now()
-print("Start test: ", dt)
+print("Start test: ", dt[0:19])
 
 print ('Starting the browser...')
 o = ChromeOptions()
@@ -66,4 +66,4 @@ print('TEST PASSED: Removing items to cart')
 driver.quit()
 
 dt = datetime.datetime.now()
-print("End test: ", dt)
+print("End test: ", dt[0:19])
