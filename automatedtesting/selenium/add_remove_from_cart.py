@@ -34,7 +34,7 @@ for item in items:
 cartitemcount = int(driver.find_element(By.CLASS_NAME, 'shopping_cart_badge').text)
 print('Number of items in the cart: ' + str(cartitemcount))
 print('Start assert')
-assert "5" in str(cartitemcount)
+assert "6" in str(cartitemcount)
 print('End assert')
 
 driver.get('https://www.saucedemo.com/cart.html')
