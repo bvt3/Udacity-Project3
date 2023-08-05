@@ -32,15 +32,15 @@ from time import sleep
 
 
 # Set options for not prompting DevTools information
-options = Options()
-options.add_experimental_option("excludeSwitches", ["enable-logging"])
-options.add_argument("--headless") 
-options.set_capability("browserName", "chrome")
+o = Options()
+#o.add_experimental_option("excludeSwitches", ["enable-logging"])
+o.add_argument("--headless") 
+o.set_capability("browserName", "chrome")
 
 print("testing started")
-driver = webdriver.Chrome(options=options)
+driver = webdriver.Chrome(options=o)
 driver.get("https://www.saucedemo.com/")
-sleep(3)
+sleep(1)
 
 # Get page title
 title = driver.title
