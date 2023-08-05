@@ -60,7 +60,7 @@ except NoSuchElementException:
 
 print('Number of items in the cart: ' + str(delitemcount))
 
-assert "0" in str(cartitemcount)
+assert "0" in str(delitemcount)
 print('TEST PASSED: Removing items to cart')
 
 driver.quit()

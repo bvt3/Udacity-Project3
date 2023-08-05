@@ -90,6 +90,10 @@ stages:
                 pip3 install selenium
                 cd ~/
                 DIR=/home/devopsagent/app
+                if [ -d "$DIR" ]; then
+                    rm -r app/
+                fi
+                sudo rm -rf '/usr/local/bin/chromedriver' # reset chromedriver
                 if [ ! -d "$DIR" ]; then
                     mkdir app
                 fi
@@ -120,14 +124,14 @@ stages:
             displayName: 'Upload log package'
             artifact: drop-seleniumtestlog
 
-          - task: Bash@3
-            displayName: 'Clean up working folder'
-            inputs:
-              targetType: 'inline'
-              script: |
-                cd ~/
-                DIR=/home/devopsagent/app
-                if [ -d "$DIR" ]; then
-                    rm -r app/
-                fi
-                sudo rm -rf '/usr/local/bin/chromedriver'
+          # - task: Bash@3
+          #   displayName: 'Clean up working folder'
+          #   inputs:
+          #     targetType: 'inline'
+          #     script: |
+          #       cd ~/
+          #       DIR=/home/devopsagent/app
+          #       if [ -d "$DIR" ]; then
+          #           rm -r app/
+          #       fi
+          #       sudo rm -rf '/usr/local/bin/chromedriver'
