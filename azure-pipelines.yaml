@@ -108,3 +108,25 @@ stages:
                 cat selenium.log
                 echo "Completed Selenium Tests. Check selenium.log for results."
 
+          - task: ArchiveFiles@2
+            displayName: 'Archive test log file'
+            inputs:
+              rootFolderOrFile: '/home/devopsagent/app/selenium.log'
+              includeRootFolder: false
+              archiveType: 'zip'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-uitestlog.zip'
+          
+          - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-uitestlog.zip   # Same as the archiveFile artifact above. 
+            displayName: 'Upload log package'
+            artifact: drop-seleniumtestlog
+
+          - task: Bash@3
+            displayName: 'Clean up working folder'
+            inputs:
+              targetType: 'inline'
+              script: |
+                cd ~/
+                DIR=/home/devopsagent/app
+                if [ -d "$DIR" ]; then
+                    rm -r app/
+                fi
