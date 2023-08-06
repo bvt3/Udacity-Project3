@@ -1,4 +1,4 @@
-name: Azure Pipelines
+name: Azure Pipelines for Project3
 
 trigger:
 - main
@@ -102,7 +102,7 @@ stages:
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-uitests.zip'
     # Selenium Test Suite - Publish the package
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-uitests.zip   # Same as the archiveFile artifact above.
-      displayName: 'Upload Package'
+      displayName: 'Upload Package - Selenium zip'
       artifact: drop-seleniumtest
 
     #--------------------------------------------#
@@ -110,12 +110,12 @@ stages:
     - task: ArchiveFiles@2
       displayName: 'Archive FakeRestAPI'
       inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/fakerestapi'
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
         includeRootFolder: false
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-      displayName: 'Upload Package'
+      displayName: 'Upload Package - FakeRestAPI zip'
       artifact: drop-fakerestapi
 
     #--------------------------------------------#
@@ -129,7 +129,7 @@ stages:
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-perftests.zip'
     # JMeter Test Suite - Publish
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-perftests.zip
-      displayName: 'Upload Package'
+      displayName: 'Upload Package - JMeter zip'
       artifact: drop-perftests
 #--------------------------------------------#
 # DEPLOYMENT STAGE
@@ -155,6 +155,7 @@ stages:
           #--------------------------------------------#
           # Run JMeter test suite against the App Service
           - task: CmdLine@2
+            displayName: 'Run performance test on the Web App (JMeter)'
             inputs:
               script: |
                 wget "https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.tgz"
