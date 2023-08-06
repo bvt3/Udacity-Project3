@@ -1,27 +1,21 @@
 {
-	"id": "ccf7a933-89db-46d3-89ed-5b01f3646cc5",
-	"name": "Udacity Prj3 DV",
+	"id": "ba77986d-205b-4b76-a28f-89144377c27c",
+	"name": "benprj3-env",
 	"values": [
 		{
-			"key": "url",
-			"value": "https://dummyjson.com/products",
+			"key": "ID",
+			"value": "22",
 			"type": "default",
 			"enabled": true
 		},
 		{
-			"key": "id",
-			"value": "101",
-			"type": "any",
-			"enabled": true
-		},
-		{
-			"key": "title",
-			"value": "Yamaha MT09",
+			"key": "url",
+			"value": "https://benprj3-appservice.azurewebsites.net",
 			"type": "default",
 			"enabled": true
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2023-08-04T06:02:10.746Z",
-	"_postman_exported_using": "Postman/10.15.8"
+	"_postman_exported_at": "2023-08-06T09:53:51.552Z",
+	"_postman_exported_using": "Postman/10.16.6"
 }
