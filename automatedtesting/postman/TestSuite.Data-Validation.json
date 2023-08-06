@@ -31,12 +31,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://benprj3-appservice.azurewebsites.net/api/Activities/?ID={{ID}}",
-					"protocol": "https",
+					"raw": "{{url}}/api/Activities/?ID={{ID}}",
 					"host": [
-						"benprj3-appservice",
-						"azurewebsites",
-						"net"
+						"{{url}}"
 					],
 					"path": [
 						"api",
