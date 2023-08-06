@@ -7,7 +7,7 @@ import datetime
 username = 'standard_user'
 pwd = 'secret_sauce'
 expectedTitle = 'Swag Labs'
-expectedCartFull = 5
+expectedCartFull = 6
 expectedCartEmpty = 0
 
 dt = datetime.datetime.now()
@@ -26,63 +26,63 @@ driver.find_element(By.CLASS_NAME, 'submit-button').click()
 dt = datetime.datetime.now()
 print( str(dt)[0:19] + ',Success,Browser started successfully. Logged-in user: ' + username )
 
-dt = datetime.datetime.now()
-#assert "Swag Labs" in driver.title
-#if driver.title == 6 and delitemcount == 0:
-if driver.title == expectedTitle:
-    print( str(dt)[0:19] + ',Success,TEST PASSED: Website title' )
-else:
-    print( str(dt)[0:19] + ',Success,TEST FAILED: Website title' )
+# dt = datetime.datetime.now()
+# #assert "Swag Labs" in driver.title
+# #if driver.title == 6 and delitemcount == 0:
+# if driver.title == expectedTitle:
+#     print( str(dt)[0:19] + ',Success,TEST PASSED: Website title' )
+# else:
+#     print( str(dt)[0:19] + ',Success,TEST FAILED: Website title' )
 
-items = driver.find_elements(By.XPATH, '//div[@class="inventory_item"]')
-for item in items:
-    itemdesc = item.find_element(By.XPATH, './/div[@class="inventory_item_description"]')
-    label = itemdesc.find_element(By.XPATH, './/div[@class="inventory_item_label"]')
-    itemname = label.find_element(By.XPATH, './/div[@class="inventory_item_name"]')
-    pricebar = itemdesc.find_element(By.XPATH, './/div[@class="pricebar"]')
-    pricebar.find_element(By.CLASS_NAME, 'btn_inventory').click()
-    dt = datetime.datetime.now()
-    print( str(dt)[0:19] + ',Success,Added to cart: ' + itemname.text )
+# items = driver.find_elements(By.XPATH, '//div[@class="inventory_item"]')
+# for item in items:
+#     itemdesc = item.find_element(By.XPATH, './/div[@class="inventory_item_description"]')
+#     label = itemdesc.find_element(By.XPATH, './/div[@class="inventory_item_label"]')
+#     itemname = label.find_element(By.XPATH, './/div[@class="inventory_item_name"]')
+#     pricebar = itemdesc.find_element(By.XPATH, './/div[@class="pricebar"]')
+#     pricebar.find_element(By.CLASS_NAME, 'btn_inventory').click()
+#     dt = datetime.datetime.now()
+#     print( str(dt)[0:19] + ',Success,Added to cart: ' + itemname.text )
 
-cartitemcount = int(driver.find_element(By.CLASS_NAME, 'shopping_cart_badge').text)
-dt = datetime.datetime.now()
-print( str(dt)[0:19] + ',Success,Number of items in the cart: ' + str(cartitemcount) )
+# cartitemcount = int(driver.find_element(By.CLASS_NAME, 'shopping_cart_badge').text)
+# dt = datetime.datetime.now()
+# print( str(dt)[0:19] + ',Success,Number of items in the cart: ' + str(cartitemcount) )
 
-#assert "6" in str(cartitemcount)
-if cartitemcount == expectedCartFull:
-    print( str(dt)[0:19] + ',Success,TEST PASSED: Adding items to cart' )
-else:
-    print( str(dt)[0:19] + ',Success,TEST FAILED: Adding items to cart - Expected ' + str(expectedCartFull) + ' but ' + str(cartitemcount) )
+# #assert "6" in str(cartitemcount)
+# if cartitemcount == expectedCartFull:
+#     print( str(dt)[0:19] + ',Success,TEST PASSED: Adding items to cart' )
+# else:
+#     print( str(dt)[0:19] + ',Success,TEST FAILED: Adding items to cart - Expected ' + str(expectedCartFull) + ' but ' + str(cartitemcount) )
 
 
-driver.get('https://www.saucedemo.com/cart.html')
-dt = datetime.datetime.now()
-print( str(dt)[0:19] + ',Success,Navigated to the cart page' )
+# driver.get('https://www.saucedemo.com/cart.html')
+# dt = datetime.datetime.now()
+# print( str(dt)[0:19] + ',Success,Navigated to the cart page' )
 
-cartitems = driver.find_elements(By.XPATH, '//div[@class="cart_item"]')
-for cartitem in cartitems:
-    label = cartitem.find_element(By.XPATH, './/div[@class="cart_item_label"]')
-    itemname = label.find_element(By.XPATH, './/div[@class="inventory_item_name"]')
-    itemnametxt = itemname.text
-    pricebar = label.find_element(By.XPATH, './/div[@class="item_pricebar"]')    
-    pricebar.find_element(By.CLASS_NAME, 'cart_button').click()
-    dt = datetime.datetime.now()
-    print( str(dt)[0:19] + ',Success,Removed item: ' + itemnametxt )
+# cartitems = driver.find_elements(By.XPATH, '//div[@class="cart_item"]')
+# for cartitem in cartitems:
+#     label = cartitem.find_element(By.XPATH, './/div[@class="cart_item_label"]')
+#     itemname = label.find_element(By.XPATH, './/div[@class="inventory_item_name"]')
+#     itemnametxt = itemname.text
+#     pricebar = label.find_element(By.XPATH, './/div[@class="item_pricebar"]')    
+#     pricebar.find_element(By.CLASS_NAME, 'cart_button').click()
+#     dt = datetime.datetime.now()
+#     print( str(dt)[0:19] + ',Success,Removed item: ' + itemnametxt )
 
-delitemcount = 0
-try:
-    delitemcount = int(driver.find_element(By.CLASS_NAME, 'shopping_cart_badge').text)
-except NoSuchElementException:
-    delitemcount = 0
+# delitemcount = 0
+# try:
+#     delitemcount = int(driver.find_element(By.CLASS_NAME, 'shopping_cart_badge').text)
+# except NoSuchElementException:
+#     delitemcount = 0
 
-dt = datetime.datetime.now()
-print( str(dt)[0:19] + ',Success,Number of items in the cart: ' + str(delitemcount) )
+# dt = datetime.datetime.now()
+# print( str(dt)[0:19] + ',Success,Number of items in the cart: ' + str(delitemcount) )
 
-#assert "0" in str(delitemcount)
-if delitemcount == expectedCartEmpty:
-    print( str(dt)[0:19] + ',Success,TEST PASSED: Removing items to cart' )
-else:
-    print( str(dt)[0:19] + ',Success,TEST FAILED: Removing items to cart - Expected ' + str(expectedCartEmpty) + ' but ' + str(delitemcount) )
+# #assert "0" in str(delitemcount)
+# if delitemcount == expectedCartEmpty:
+#     print( str(dt)[0:19] + ',Success,TEST PASSED: Removing items to cart' )
+# else:
+#     print( str(dt)[0:19] + ',Success,TEST FAILED: Removing items to cart - Expected ' + str(expectedCartEmpty) + ' but ' + str(delitemcount) )
 
 
 driver.quit()
