@@ -23,6 +23,7 @@ stages:
 - stage: Build
   jobs:
   - job: BuildInfrastructure
+    displayName: Build Infrastructure
     steps:
     #--------------------------------------------#  
     # Use Terraform to create the Infrastructure      
