@@ -13,10 +13,11 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Validation: Status code is 200\", function () {\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Validation: [\" + jsonData.ID + \"] Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"Validation: Title test passed\", function () {\r",
+							"pm.test(\"Validation: [\" + jsonData.ID + \"] Title test passed\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.Title).to.eql(data['Title']);\r",
 							"});\r",
