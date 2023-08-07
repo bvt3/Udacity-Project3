@@ -10,7 +10,7 @@ variables:
   azureServiceConnectionId: 'ARM_service_conn'
   projectRoot: $(System.DefaultWorkingDirectory)
   environmentName: 'tf-vm'
-  resourceGroupName: 'UdacityProject3'
+  #resourceGroupName: 'UdacityProject3'
   backendARMResourceGroupName: 'devops'
   backendARMStorageAccountName: 'udacity80st'
   backendARMContainerName: 'mycontainer'
