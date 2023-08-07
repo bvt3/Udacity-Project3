@@ -123,9 +123,9 @@ stages:
             inputs:
               ConnectionType: "AzureRM";
               azureSubscription: $(azureServiceConnectionId)
-              WebappName: $(webAppName)
               #appName: $(webAppName)
               appType: webApp
+              WebAppName : $(webAppName)
               #resourceGroupName: $(resourceGroupName)
               packageForLinux: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
               deploymentMethod: zipDeploy
