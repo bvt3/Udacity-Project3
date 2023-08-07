@@ -10,6 +10,7 @@ variables:
   azureServiceConnectionId: 'ARM_service_conn'
   projectRoot: $(System.DefaultWorkingDirectory)
   environmentName: 'tf-vm'
+  resourceGroupName: 'UdacityProject3'
   backendARMResourceGroupName: 'devops'
   backendARMStorageAccountName: 'udacity80st'
   backendARMContainerName: 'mycontainer'
@@ -120,10 +121,15 @@ stages:
           - task: AzureRMWebAppDeployment@4
             displayName: 'Deploy Azure Web App'
             inputs:
+              ConnectionType: "AzureRM";
               azureSubscription: $(azureServiceConnectionId)
-              appName: $(webAppName)
+              webAppName: $(webAppName)
+              #appName: $(webAppName)
               appType: webApp
-              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+              #resourceGroupName: $(resourceGroupName)
+              packageForLinux: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+              deploymentMethod: zipDeploy
+              #package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
 
 #--------------------------------------------#
 # TEST STAGE
