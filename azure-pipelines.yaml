@@ -277,11 +277,10 @@ stages:
                   tar -xf apache-jmeter-5.6.tgz
                   unzip -o $(Build.BuildId)-perftests.zip
                   echo "RUN STRESS TEST"
-                  ./apache-jmeter-5.6/bin/jmeter -n -t PerformanceTestSuite.jmx -j jmeterPerformanceTestSuite.log -f                  
-                  echo "RUN ENDURANCE TEST"
+                  ./apache-jmeter-5.6/bin/jmeter -n -t PerformanceTestSuite.jmx -j jmeterPerformanceTestSuite.log -f
                   cat jmeterPerformanceTestSuite.log
-                  chmod u+x bookIDs.csv
-                  ./apache-jmeter-5.6/bin/jmeter -Jcsvfolder=$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/bookIDs.csv -n -t EnduranceTestSuite.jmx -j jmeterEnduranceTestSuite.log -f
+                  echo "RUN ENDURANCE TEST"
+                  ./apache-jmeter-5.6/bin/jmeter -Jcsvfolder=$(System.DefaultWorkingDirectory)/automatedtesting/jmeter -n -t EnduranceTestSuite.jmx -j jmeterEnduranceTestSuite.log -f
                   cat jmeterEnduranceTestSuite.log
                 workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
             #--------------------------------------------#    
