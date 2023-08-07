@@ -61,36 +61,6 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
 
-    # #--------------------------------------------#    
-    # # Postman - Install Newman
-    # - task: CmdLine@2
-    #   displayName: Install Newman
-    #   inputs:
-    #     script: 'sudo npm install -g newman'
-    #     workingDirectory: '$(System.DefaultWorkingDirectory)'
-    # # Postman Data Validation Test Suite
-    # - task: CmdLine@2
-    #   displayName: Run Data Validation Tests
-    #   continueOnError: true
-    #   inputs:
-    #     script: 'newman run TestSuite.Data-Validation.json -e Test.environment.json -d activities.csv --reporters cli,junit --reporter-junit-export TEST-DataValidation.xml'
-    #     workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
-    # # Postman Regression Test Suite
-    # - task: CmdLine@2
-    #   displayName: Run Regression Tests
-    #   continueOnError: true
-    #   inputs:
-    #     script: 'newman run TestSuite.Regression.json -e Test.environment.json --reporters cli,junit --reporter-junit-export TEST-Regression.xml'
-    #     workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
-    # # Postman - Publish Results
-    # - task: PublishTestResults@2
-    #   inputs:
-    #     testResultsFormat: 'JUnit'
-    #     testResultsFiles: '**/TEST-*.xml'
-    #     searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
-    #     mergeTestResults: true
-    #     testRunTitle: 'Postman tests'
-
     #--------------------------------------------#
     # Selenium (UI) Test Suite - Archive the package
     # "ArchiveFiles@2" picks up the web package and archives it.
@@ -153,162 +123,102 @@ stages:
               appName: $(webAppName)
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
-          # #--------------------------------------------#
-          # # Run JMeter test suite against the App Service
-          # - task: CmdLine@2
-          #   displayName: 'Run JMeter'
-          #   inputs:
-          #     script: |
-          #       wget "https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.tgz"
-          #       tar -xf apache-jmeter-5.6.tgz
-          #       unzip -o $(Build.BuildId)-perftests.zip
-          #       ./apache-jmeter-5.6/bin/jmeter -n -t PerformanceTestSuite.jmx -j jmeterPerformanceTestSuite.log -f
-          #       cat jmeterPerformanceTestSuite.log
-          #     workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
 
-# #--------------------------------------------#
-#   # Selenium | Functional UI Tests
-#   - deployment: VMDeploy
-#     displayName: Selenium Tests
-#     environment: '$(environmentName)'
-#     strategy:
-#       runOnce:
-#         deploy:
-#           steps:
-#           - download: current
-#             displayName: 'Download Selenium artifact'
-#             artifact: drop-seleniumtest
-            
-#           - task: Bash@3
-#             displayName: 'Execute Selenium tests'
-#             inputs:
-#               targetType: 'inline'
-#               script: |           
-#                 #! /bin/bash
-                
-#                 sudo apt-get upgrade -y
-#                 sudo apt-get install python3-pip -y
-#                 sudo apt-get install unzip -y
-#                 sudo apt-get install -y chromium-browser
-#                 pip3 install selenium
-#                 cd ~/
-#                 DIR=/home/devopsagent/app
-#                 if [ -d "$DIR" ]; then
-#                     rm -r app/
-#                 fi
-#                 sudo rm -rf '/usr/local/bin/chromedriver' # reset chromedriver
-#                 if [ ! -d "$DIR" ]; then
-#                     mkdir app
-#                 fi
-#                 mv /home/devopsagent/mynewagent/_prj3work/1/drop-seleniumtest/$(Build.BuildId)-uitests.zip app
-#                 cd app
-#                 unzip -o $(Build.BuildId)-uitests.zip
-#                 FILE=/home/devopsagent/app/chromedriver-linux64.zip
-#                 if [ ! -f "$FILE" ]; then                    
-#                     wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.170/linux64/chromedriver-linux64.zip
-#                     unzip -o chromedriver-linux64.zip
-#                     sudo ln -s $PWD/chromedriver /usr/local/bin/chromedriver
-#                 fi
-#                 export PATH=$PATH:/home/devopsagent/app
-#                 echo "Starting Selenium Tests"
-#                 python3 add_remove_from_cart.py >> selenium.log
-#                 cat selenium.log
-#                 echo "Completed Selenium Tests. Check selenium.log for results."
 #--------------------------------------------#
 # TEST STAGE
 #--------------------------------------------#
-# - stage: Test
-#   jobs:    
-#     - deployment: TestRun
-#       displayName: Run Tests
-#       environment: '$(environmentName)'
-#       strategy:
-#         runOnce:
-#           deploy:
-#             steps:
-#             #--------------------------------------------#
-#             # Selenium | Functional UI Tests
-#             - download: current
-#               displayName: 'Download Selenium artifact'
-#               artifact: drop-seleniumtest
+- stage: Test
+  jobs:    
+    - deployment: TestRun
+      displayName: Run Tests
+      environment: '$(environmentName)'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            #--------------------------------------------#
+            # Selenium | Functional UI Tests
+            - download: current
+              displayName: 'Download Selenium artifact'
+              artifact: drop-seleniumtest
               
-#             - task: Bash@3
-#               displayName: 'Execute Selenium tests'
-#               inputs:
-#                 targetType: 'inline'
-#                 script: |           
-#                   #! /bin/bash
+            - task: Bash@3
+              displayName: 'Execute Selenium tests'
+              inputs:
+                targetType: 'inline'
+                script: |           
+                  #! /bin/bash
                   
-#                   sudo apt-get upgrade -y
-#                   sudo apt-get install python3-pip -y
-#                   sudo apt-get install unzip -y
-#                   sudo apt-get install -y chromium-browser
-#                   pip3 install selenium
-#                   cd ~/
-#                   DIR=/home/devopsagent/app
-#                   if [ -d "$DIR" ]; then
-#                       rm -r app/
-#                   fi
-#                   sudo rm -rf '/usr/local/bin/chromedriver' # reset chromedriver
-#                   if [ ! -d "$DIR" ]; then
-#                       mkdir app
-#                   fi
-#                   mv /home/devopsagent/mynewagent/_prj3work/1/drop-seleniumtest/$(Build.BuildId)-uitests.zip app
-#                   cd app
-#                   unzip -o $(Build.BuildId)-uitests.zip
-#                   FILE=/home/devopsagent/app/chromedriver-linux64.zip
-#                   if [ ! -f "$FILE" ]; then                    
-#                       wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.170/linux64/chromedriver-linux64.zip
-#                       unzip -o chromedriver-linux64.zip
-#                       sudo ln -s $PWD/chromedriver /usr/local/bin/chromedriver
-#                   fi
-#                   export PATH=$PATH:/home/devopsagent/app
-#                   echo "Starting Selenium Tests"
-#                   python3 add_remove_from_cart.py >> selenium.log
-#                   cat selenium.log
-#                   echo "Completed Selenium Tests. Check selenium.log for results."
-#             #--------------------------------------------#
-#             # Run JMeter test suite against the App Service
-#             - task: CmdLine@2
-#               displayName: 'Run JMeter'
-#               inputs:
-#                 script: |
-#                   wget "https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.tgz"
-#                   tar -xf apache-jmeter-5.6.tgz
-#                   unzip -o $(Build.BuildId)-perftests.zip
-#                   echo "RUN STRESS TEST"
-#                   ./apache-jmeter-5.6/bin/jmeter -n -t PerformanceTestSuite.jmx -j jmeterPerformanceTestSuite.log -f
-#                   cat jmeterPerformanceTestSuite.log
-#                   echo "RUN ENDURANCE TEST"
-#                   ./apache-jmeter-5.6/bin/jmeter -Jcsvfolder=$(System.DefaultWorkingDirectory)/automatedtesting/jmeter -n -t EnduranceTestSuite.jmx -j jmeterEnduranceTestSuite.log -f
-#                   cat jmeterEnduranceTestSuite.log
-#                 workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
-#             #--------------------------------------------#    
-#             # Postman - Install Newman
-#             - task: CmdLine@2
-#               displayName: Install Newman
-#               inputs:
-#                 script: 'sudo npm install -g newman'
-#                 workingDirectory: '$(System.DefaultWorkingDirectory)'
-#             # Postman Data Validation Test Suite
-#             - task: CmdLine@2
-#               displayName: Run Data Validation Tests
-#               continueOnError: true
-#               inputs:
-#                 script: 'newman run TestSuite.Data-Validation.json -e Test.environment.json -d activities.csv --reporters cli,junit --reporter-junit-export TEST-DataValidation.xml'
-#                 workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
-#             # Postman Regression Test Suite
-#             - task: CmdLine@2
-#               displayName: Run Regression Tests
-#               continueOnError: true
-#               inputs:
-#                 script: 'newman run TestSuite.Regression.json -e Test.environment.json --reporters cli,junit --reporter-junit-export TEST-Regression.xml'
-#                 workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
-#             # Postman - Publish Results
-#             - task: PublishTestResults@2
-#               inputs:
-#                 testResultsFormat: 'JUnit'
-#                 testResultsFiles: '**/TEST-*.xml'
-#                 searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
-#                 mergeTestResults: true
-#                 testRunTitle: 'Postman tests'            
+                  sudo apt-get upgrade -y
+                  sudo apt-get install python3-pip -y
+                  sudo apt-get install unzip -y
+                  sudo apt-get install -y chromium-browser
+                  pip3 install selenium
+                  cd ~/
+                  DIR=/home/devopsagent/app
+                  if [ -d "$DIR" ]; then
+                      rm -r app/
+                  fi
+                  sudo rm -rf '/usr/local/bin/chromedriver' # reset chromedriver
+                  if [ ! -d "$DIR" ]; then
+                      mkdir app
+                  fi
+                  mv /home/devopsagent/mynewagent/_prj3work/1/drop-seleniumtest/$(Build.BuildId)-uitests.zip app
+                  cd app
+                  unzip -o $(Build.BuildId)-uitests.zip
+                  FILE=/home/devopsagent/app/chromedriver-linux64.zip
+                  if [ ! -f "$FILE" ]; then                    
+                      wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.170/linux64/chromedriver-linux64.zip
+                      unzip -o chromedriver-linux64.zip
+                      sudo ln -s $PWD/chromedriver /usr/local/bin/chromedriver
+                  fi
+                  export PATH=$PATH:/home/devopsagent/app
+                  echo "Starting Selenium Tests"
+                  python3 add_remove_from_cart.py >> selenium.log
+                  cat selenium.log
+                  echo "Completed Selenium Tests. Check selenium.log for results."
+            #--------------------------------------------#
+            # Run JMeter test suite against the App Service
+            - task: CmdLine@2
+              displayName: 'Run JMeter'
+              inputs:
+                script: |
+                  wget "https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.tgz"
+                  tar -xf apache-jmeter-5.6.tgz
+                  unzip -o $(Build.BuildId)-perftests.zip
+                  echo "RUN STRESS TEST"
+                  ./apache-jmeter-5.6/bin/jmeter -n -t PerformanceTestSuite.jmx -j jmeterPerformanceTestSuite.log -f
+                  cat jmeterPerformanceTestSuite.log
+                  echo "RUN ENDURANCE TEST"
+                  ./apache-jmeter-5.6/bin/jmeter -Jcsvfolder=$(System.DefaultWorkingDirectory)/automatedtesting/jmeter -n -t EnduranceTestSuite.jmx -j jmeterEnduranceTestSuite.log -f
+                  cat jmeterEnduranceTestSuite.log
+                workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
+            #--------------------------------------------#    
+            # Postman - Install Newman
+            - task: CmdLine@2
+              displayName: Install Newman
+              inputs:
+                script: 'sudo npm install -g newman'
+                workingDirectory: '$(System.DefaultWorkingDirectory)'
+            # Postman Data Validation Test Suite
+            - task: CmdLine@2
+              displayName: Run Data Validation Tests
+              continueOnError: true
+              inputs:
+                script: 'newman run TestSuite.Data-Validation.json -e Test.environment.json -d activities.csv --reporters cli,junit --reporter-junit-export TEST-DataValidation.xml'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+            # Postman Regression Test Suite
+            - task: CmdLine@2
+              displayName: Run Regression Tests
+              continueOnError: true
+              inputs:
+                script: 'newman run TestSuite.Regression.json -e Test.environment.json --reporters cli,junit --reporter-junit-export TEST-Regression.xml'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+            # Postman - Publish Results
+            - task: PublishTestResults@2
+              inputs:
+                testResultsFormat: 'JUnit'
+                testResultsFiles: '**/TEST-*.xml'
+                searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+                mergeTestResults: true
+                testRunTitle: 'Postman tests'            
